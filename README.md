@@ -36,3 +36,8 @@ The API/Gallery is ran using Node.JS, using express, passport, mongoDB for Datab
     "passport": "^0.7.0",
     "passport-discord": "^0.1.4",
     "passport-oauth2": "^1.8.0"
+
+![Screenshot 2024-09-24 151905](https://github.com/user-attachments/assets/a6c22e54-62b0-45b8-bc8c-7d1ebbae7a8b)
+![Screenshot 2024-09-24 151854](https://github.com/user-attachments/assets/9b7d262f-bc91-475b-9456-de12c44a1bba)
+![Screenshot 2024-09-24 151845](https://github.com/user-attachments/assets/f24e36d0-99ae-4a29-80d3-4ec820449f5e)
+![Screenshot 2024-09-24 151835](https://github.com/user-attachments/assets/e29b5b42-be08-496d-9b66-c45eed310c6e)

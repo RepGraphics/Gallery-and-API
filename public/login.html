@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/logo.png">
+    <title>API | Login</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Navigation Bar Styling */
+        nav {
+            background-color: #1e1e1e;
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: inline-block;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #28a745;
+        }
+
+        input[type="email"], input[type="password"], input[type="text"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #222;
+            color: #e0e0e0;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .discord-login {
+            background-color: #7289da; /* Discord's brand color */
+        }
+
+        .discord-login:hover {
+            background-color: #5b6eae;
+        }
+
+        .discord-icon {
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+            <li><a href="/">API Documentation</a></li>
+            <li><a href="/upload">Upload</a></li>
+            <li><a href="/login">Login</a></li>
+        </ul>
+    </nav>
+
+    <h1>Login</h1>
+
+    <!-- Discord Login Button -->
+    <button type="button" class="discord-login" id="discordLoginButton">
+        <img src="/discord.webp" alt="Discord Logo" class="discord-icon" width="24"> 
+        Sign in with Discord
+    </button>    
+
+
+</body>
+<script>
+    document.getElementById('discordLoginButton').addEventListener('click', function() {
+        window.location.href = '/auth/discord';
+    });
+</script>
+</html>

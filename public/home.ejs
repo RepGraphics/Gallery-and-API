@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Home - User Dashboard</title>
+    <style>
+        /* General Reset and Body Styling */
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        :root {
+            --background-color: #121212;
+            --text-color: #e0e0e0;
+            --primary-color: #28a745;
+            --nav-bg-color: #1e1e1e;
+            --hover-color: #ffffff;
+            --card-bg-color: #1f1f1f;
+        }
+
+        [data-theme="light"] {
+            --background-color: #f0f2f5;
+            --text-color: #333;
+            --primary-color: #28a745;
+            --nav-bg-color: #ffffff;
+            --hover-color: #28a745;
+            --card-bg-color: #ffffff;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        nav {
+            background-color: var(--nav-bg-color);
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex; /* Align items horizontally */
+            justify-content: center; /* Center items */
+            align-items: center; /* Vertically align items */
+            gap: 20px; /* Add space between items */
+        }
+
+        nav ul li {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .profile-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .container {
+            padding: 20px;
+            margin: 20px auto;
+            background-color: var(--card-bg-color);
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            word-wrap: break-word;
+        }
+
+        h1 {
+            color: var(--primary-color);
+        }
+
+        p {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Button container styling */
+        .button-group {
+            margin-top: 15px;
+            display: inline-flex;  /* Align buttons side by side */
+            gap: 10px; /* Space between buttons */
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--text-color);
+        }
+
+        .dark-mode-toggle:hover {
+            color: var(--hover-color);
+        }
+
+        /* API Key Styling */
+        .api-key {
+            font-family: monospace;
+            font-size: 1.1em;
+            background-color: #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #e0e0e0;
+        }
+
+        .hidden-api-key {
+            letter-spacing: 2px; /* Style for obscured API key */
+        }
+    </style>
+</head>
+<body data-theme="dark"> <!-- Default to dark theme -->
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+            <li><a href="/">API Documentation</a></li>
+            <li><a href="/upload">Upload</a></li>
+            <li><a href="/logout">Logout</a></li>
+            <li>
+                <img src="https://imgur.com/JXhZZMo.png" 
+                     alt="Profile Picture" class="profile-picture">
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Theme Toggle Button -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-sun" id="themeIcon"></i>
+    </button>
+
+    <!-- User Dashboard Container -->
+    <div class="container">
+        <h1>Welcome, <%= username %></h1>
+        <p><strong>Discord ID:</strong> <%= userID %></p>
+
+        <p><strong>Your API Key:</strong> 
+            <span class="api-key hidden-api-key" id="apiKeyDisplay">
+                <%= apiKey.slice(0, 5) %>******  <!-- Show only first 5 characters -->
+            </span>
+        </p>
+
+        <!-- Button group for re-roll and show API key -->
+        <div class="button-group">
+            <form action="/re-roll" method="POST">
+                <button type="submit">Re-roll API Key</button>
+            </form>
+            <button id="toggleApiKey">Show API Key</button>
+        </div>
+    </div>
+
+    <!-- Script for Theme Toggle and API Key Reveal -->
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const body = document.body;
+
+        // Load theme from localStorage, default to dark
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        body.setAttribute('data-theme', savedTheme);
+        themeIcon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+
+        darkModeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            body.setAttribute('data-theme', newTheme);
+            themeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', newTheme); // Save the theme preference
+        });
+
+        // API Key reveal/hide functionality
+        const apiKeyDisplay = document.getElementById('apiKeyDisplay');
+        const toggleApiKey = document.getElementById('toggleApiKey');
+        let apiKeyVisible = false;
+
+        toggleApiKey.addEventListener('click', () => {
+            if (!apiKeyVisible) {
+                apiKeyDisplay.textContent = '<%= apiKey %>';  // Show the full API key
+                toggleApiKey.textContent = 'Hide API Key';    // Change button text
+                apiKeyVisible = true;
+            } else {
+                apiKeyDisplay.textContent = '<%= apiKey.slice(0, 5) %>******';  // Hide part of the API key
+                toggleApiKey.textContent = 'Show API Key';    // Change button text
+                apiKeyVisible = false;
+            }
+        });
+    </script>
+</body>
+</html>
